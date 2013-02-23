@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>tmpl</string>
+	</array>
+	<key>name</key>
+	<string>MailRu tmpl</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>begin</key>
+			<string>##</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>EXPRESSIONSTART.language.tmpl</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>double-dash wrapped expression</string>
+			<key>end</key>
+			<string>##</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>EXPRESSIONEND.language.tmpl</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>expression.tmpl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>SetVars\(</string>
+					<key>comment</key>
+					<string>SetVars instruction begins with SetVars(someVar, </string>
+					<key>end</key>
+					<string>\)</string>
+					<key>name</key>
+					<string>setvars.expression.tmpl</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#ASSIGNMENTEXPRESSION</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+	</array>
+	<key>repository</key>
+	<dict>
+		<key>ASSIGNMENTEXPRESSION</key>
+		<dict>
+			<key>comment</key>
+			<string>assignment expression consists of a label (target variable), assignment operator and other expression</string>
+			<key>name</key>
+			<string>ASSIGNMENTEXPRESSION.language.tmpl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#VARIABLE</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#ASSIGNMENTOPERATOR</string>
+				</dict>
+				<dict>
+					<key>comment</key>
+					<string>todo: include #EXPRESSION as soon as it's ready</string>
+				</dict>
+			</array>
+		</dict>
+		<key>ASSIGNMENTOPERATOR</key>
+		<dict>
+			<key>comment</key>
+			<string>there are two types of assignment operators in mpoptmpl - , and =</string>
+			<key>match</key>
+			<string>[,=]{1}</string>
+			<key>name</key>
+			<string>ASSIGNMENTOPERATOR.language.tmpl</string>
+		</dict>
+		<key>DDASH</key>
+		<dict>
+			<key>comment</key>
+			<string>any variable wrapped in double dashes returns its value</string>
+			<key>match</key>
+			<string>##</string>
+			<key>name</key>
+			<string>DDASH.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_BITAND</key>
+		<dict>
+			<key>comment</key>
+			<string>Битовая операция AND между Arg1 и Arg2, где Arg1 - переменная, а Arg2 может быть передан значением</string>
+			<key>match</key>
+			<string>BitAnd</string>
+			<key>name</key>
+			<string>BITAND.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_BITNOT</key>
+		<dict>
+			<key>comment</key>
+			<string>Битовая операция NOT на Arg1, Arg1 - переменная</string>
+			<key>match</key>
+			<string>BitNot</string>
+			<key>name</key>
+			<string>BITNOT.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_BITOR</key>
+		<dict>
+			<key>comment</key>
+			<string>Битовая операция OR между Arg1 и Arg2, где Arg1 - переменная, а Arg2 может быть передан значением</string>
+			<key>match</key>
+			<string>BitOr</string>
+			<key>name</key>
+			<string>BITOR.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_BITXOR</key>
+		<dict>
+			<key>comment</key>
+			<string>Битовая операция XOR между Arg1 и Arg2, где Arg1 - переменная, а Arg2 может быть передан значением</string>
+			<key>match</key>
+			<string>BitXor</string>
+			<key>name</key>
+			<string>BITXOR.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_BR</key>
+		<dict>
+			<key>comment</key>
+			<string>в (Arg1) заменяет '
+' тэгом &lt;br&gt;</string>
+			<key>match</key>
+			<string>br</string>
+			<key>name</key>
+			<string>BR.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_CRC32</key>
+		<dict>
+			<key>comment</key>
+			<string>crc32() от сожержимого переменной ##Arg1##</string>
+			<key>match</key>
+			<string>CRC32</string>
+			<key>name</key>
+			<string>CRC32.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_DEC</key>
+		<dict>
+			<key>comment</key>
+			<string>уменьшает значение переменной Arg1 на 1 или [на Arg2]</string>
+			<key>match</key>
+			<string>Dec</string>
+			<key>name</key>
+			<string>DEC.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_DIV</key>
+		<dict>
+			<key>comment</key>
+			<string>возвращает результат деления Arg1/Arg2, если [Arg3] отсутствует или 0. иначе (Arg1+Arg2)/Arg2</string>
+			<key>match</key>
+			<string>Div</string>
+			<key>name</key>
+			<string>DIV.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_EQ</key>
+		<dict>
+			<key>comment</key>
+			<string>проверка на равенство между аргументами Arg1 и Arg2</string>
+			<key>match</key>
+			<string>Eq</string>
+			<key>name</key>
+			<string>EQ.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_EQ2</key>
+		<dict>
+			<key>comment</key>
+			<string>проверка на равенство между аргументами Arg1 и Arg2. может сравнивать переменные из FOR, начинаются на '.'. но выполняется дольше чем Eq</string>
+			<key>match</key>
+			<string>Eq2</string>
+			<key>name</key>
+			<string>EQ2.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_EQV</key>
+		<dict>
+			<key>match</key>
+			<string>EqV</string>
+			<key>name</key>
+			<string>EQV.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_FIRST</key>
+		<dict>
+			<key>comment</key>
+			<string>возвращает 1, если 1й элемент цикла иначе 0. Arg1 - любая переменная цикла</string>
+			<key>match</key>
+			<string>First</string>
+			<key>name</key>
+			<string>FIRST.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_GETCOOKIE</key>
+		<dict>
+			<key>comment</key>
+			<string>копирует значение cookie (Arg1) в переменную (Arg2)</string>
+			<key>match</key>
+			<string>GetCookie</string>
+			<key>name</key>
+			<string>GETCOOKIE.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_GETUSERPROPERTY</key>
+		<dict>
+			<key>match</key>
+			<string>GetUserProperty</string>
+			<key>name</key>
+			<string>GETUSERPROPERTY.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_GT</key>
+		<dict>
+			<key>comment</key>
+			<string>проверка на 'больше' (Arg1 &gt; Arg2). ВАЖНО: Arg2 должен быть ##Arg2##. Пример: Gt(Arg1, ##Arg2##)</string>
+			<key>match</key>
+			<string>Gt</string>
+			<key>name</key>
+			<string>GT.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_GT2</key>
+		<dict>
+			<key>comment</key>
+			<string>проверка на 'больше' (Arg1 &gt; Arg2). может сравнивать переменные из FOR, начинаются на '.'. но выполняется дольше чем Gt</string>
+			<key>match</key>
+			<string>Gt2</string>
+			<key>name</key>
+			<string>GT2.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_IDX</key>
+		<dict>
+			<key>comment</key>
+			<string>возвращает номер текущей итерации цикла. Arg1 - любая переменная цикла</string>
+			<key>match</key>
+			<string>Idx</string>
+			<key>name</key>
+			<string>IDX.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_INC</key>
+		<dict>
+			<key>comment</key>
+			<string>увеличивает значение переменной Arg1 на 1 или [на Arg2]</string>
+			<key>match</key>
+			<string>Inc</string>
+			<key>name</key>
+			<string>INC.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_JSONENCODE</key>
+		<dict>
+			<key>comment</key>
+			<string>возвращает переменную с заэскейпленными символами для js</string>
+			<key>match</key>
+			<string>JsonEncode</string>
+			<key>name</key>
+			<string>JSONENCODE.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_LAST</key>
+		<dict>
+			<key>comment</key>
+			<string>возвращает 1, если последний элемент цикла иначе 0. Arg1 - любая переменная цикла</string>
+			<key>match</key>
+			<string>Last</string>
+			<key>name</key>
+			<string>LAST.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_LT</key>
+		<dict>
+			<key>comment</key>
+			<string>проверка на 'меньше' (Arg1 &lt; Arg2). ВАЖНО: Arg2 должен быть ##Arg2##. Пример: Lt(Arg1, ##Arg2##)</string>
+			<key>match</key>
+			<string>Lt</string>
+			<key>name</key>
+			<string>LT.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_LT2</key>
+		<dict>
+			<key>comment</key>
+			<string>проверка на 'меньше' (Arg1 &lt; Arg2). может сравнивать переменные из FOR, начинаются на '.'. но выполняется дольше чем Lt</string>
+			<key>match</key>
+			<string>Lt2</string>
+			<key>name</key>
+			<string>LT2.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_MOD</key>
+		<dict>
+			<key>comment</key>
+			<string>возвращает остаток от деления</string>
+			<key>match</key>
+			<string>Mod</string>
+			<key>name</key>
+			<string>MOD.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_MOD2</key>
+		<dict>
+			<key>comment</key>
+			<string>Остаток от деления Arg1 на Arg2</string>
+			<key>match</key>
+			<string>Mod2</string>
+			<key>name</key>
+			<string>MOD2.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_MRCU</key>
+		<dict>
+			<key>comment</key>
+			<string>MRCU</string>
+			<key>match</key>
+			<string>MRCU</string>
+			<key>name</key>
+			<string>MRCU.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_MUL</key>
+		<dict>
+			<key>comment</key>
+			<string>возвращает результат умножения Arg1*Arg2</string>
+			<key>match</key>
+			<string>Mul</string>
+			<key>name</key>
+			<string>MUL.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_NOBR</key>
+		<dict>
+			<key>comment</key>
+			<string>в (Arg1) заменяет '
+' пробелом</string>
+			<key>match</key>
+			<string>nobr</string>
+			<key>name</key>
+			<string>NOBR.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_NUMEND</key>
+		<dict>
+			<key>comment</key>
+			<string>Функция нужна для склонения слов в в зависимости от числа. Arg1 число(обычно переменная). Arg2, Arg3, Arg4 - строки в зависимости от числа. (5, 1, 2 - соотвественно)</string>
+			<key>match</key>
+			<string>NumEnd</string>
+			<key>name</key>
+			<string>NUMEND.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_ODD</key>
+		<dict>
+			<key>comment</key>
+			<string>возвращает 1, если нечетная текущая итерация цикла, иначе 0. Arg1 - любая переменная цикла</string>
+			<key>match</key>
+			<string>Odd</string>
+			<key>name</key>
+			<string>ODD.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_RANDOM</key>
+		<dict>
+			<key>comment</key>
+			<string>возвращает рандом число от 0 до 2147483647 (x32)</string>
+			<key>match</key>
+			<string>Random</string>
+			<key>name</key>
+			<string>RANDOM.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_RANDOMEX</key>
+		<dict>
+			<key>comment</key>
+			<string>Записывает в Arg1 рандомное число в пределах Arg2</string>
+			<key>match</key>
+			<string>RandomEx</string>
+			<key>name</key>
+			<string>RANDOMEX.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_REALUSERNAME</key>
+		<dict>
+			<key>match</key>
+			<string>RealUserName</string>
+			<key>name</key>
+			<string>REALUSERNAME.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_REKLAMA_COOKIES</key>
+		<dict>
+			<key>comment</key>
+			<string>Возвращает значение поля Arg1 из куки s</string>
+			<key>match</key>
+			<string>Relkama/CookieS</string>
+			<key>name</key>
+			<string>REKLAMA_COOKIES.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_SETUSERPROPERTY</key>
+		<dict>
+			<key>match</key>
+			<string>SetUserProperty</string>
+			<key>name</key>
+			<string>SETUSERPROPERTY.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_SETVARS</key>
+		<dict>
+			<key>comment</key>
+			<string>проверка на равенство между аргументами Arg1 и Arg2</string>
+			<key>match</key>
+			<string>SetVars</string>
+			<key>name</key>
+			<string>SetVars.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_UPPER</key>
+		<dict>
+			<key>comment</key>
+			<string>проверка на равенство между аргументами Arg1 и Arg2</string>
+			<key>match</key>
+			<string>Upper</string>
+			<key>name</key>
+			<string>UPPER.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_USERAGENT</key>
+		<dict>
+			<key>comment</key>
+			<string>уменьшает значение переменной Arg1 на 1 или [на Arg2]</string>
+			<key>match</key>
+			<string>UserAgent</string>
+			<key>name</key>
+			<string>USERAGENT.function.language.tmpl</string>
+		</dict>
+		<key>FUNCTION_WBR</key>
+		<dict>
+			<key>comment</key>
+			<string>в (Arg1) вставляет тэг &lt;wbr&gt; через каждые (Arg2) символов</string>
+			<key>match</key>
+			<string>wbr</string>
+			<key>name</key>
+			<string>WBR.function.language.tmpl</string>
+		</dict>
+		<key>LABEL</key>
+		<dict>
+			<key>comment</key>
+			<string>any variable or function name must conform to this syntax</string>
+			<key>match</key>
+			<string>[a-zA-Z_][a-zA-Z_0-9]*</string>
+			<key>name</key>
+			<string>LABEL.language.tmpl</string>
+		</dict>
+		<key>VARIABLE</key>
+		<dict>
+			<key>comment</key>
+			<string>variable can be just a label or a label preceded with a dot</string>
+			<key>name</key>
+			<string>VARIABLE.language.tmpl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>comment</key>
+					<string>a variable might have an iterator prefix meaning that it's taken from the loop</string>
+					<key>match</key>
+					<string>\.{0,1}</string>
+					<key>name</key>
+					<string>ITERATORPREFIX.language.tmpl</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#LABEL</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>scopeName</key>
+	<string>source.tmpl</string>
+	<key>uuid</key>
+	<string>5042ecef-4e4f-4c8e-8f7a-c1bee0e06da8</string>
+</dict>
+</plist>

@@ -1,0 +1,252 @@
+{ "name": "MailRu tmpl",
+	"scopeName": "source.tmpl",
+	"fileTypes": ["tmpl"],
+	"repository": {
+		"DDASH": {
+			"comment": "any variable wrapped in double dashes returns its value",
+			"name": "DDASH.language.tmpl",
+			"match": "##"
+		},
+		"LABEL": {
+			"comment": "any variable or function name must conform to this syntax",
+			"name":	"LABEL.language.tmpl",
+			"match": "[a-zA-Z_][a-zA-Z_0-9]*"
+		},
+		"VARIABLE": {
+			"comment": "variable can be just a label or a label preceded with a dot",
+			"name": "VARIABLE.language.tmpl",
+			"patterns": [
+				{
+					"comment": "a variable might have an iterator prefix meaning that it's taken from the loop",
+					"name": "ITERATORPREFIX.language.tmpl",
+					"match": "\\.{0,1}"
+				},
+				{ "include": "#LABEL" }
+			]
+		},
+		"ASSIGNMENTOPERATOR": {
+			"comment": "there are two types of assignment operators in mpoptmpl - , and =",
+			"name": "ASSIGNMENTOPERATOR.language.tmpl",
+			"match": "[,=]{1}"
+		},
+		"ASSIGNMENTEXPRESSION": {
+			"comment": "assignment expression consists of a label (target variable), assignment operator and other expression",
+			"name": "ASSIGNMENTEXPRESSION.language.tmpl",
+			"patterns": [
+				{ "include": "#VARIABLE" },
+				{ "include": "#ASSIGNMENTOPERATOR" },
+				{ "comment": "todo: include #EXPRESSION as soon as it's ready"}
+			]
+		},
+
+		"FUNCTION_EQ": {
+			"comment": "проверка на равенство между аргументами Arg1 и Arg2",
+			"name": "EQ.function.language.tmpl",
+			"match": "Eq"
+		},
+		"FUNCTION_EQ2": {
+			"comment": "проверка на равенство между аргументами Arg1 и Arg2. может сравнивать переменные из FOR, начинаются на '.'. но выполняется дольше чем Eq",
+			"name": "EQ2.function.language.tmpl",
+			"match": "Eq2"
+		},
+		"FUNCTION_LT": {
+			"comment": "проверка на 'меньше' (Arg1 < Arg2). ВАЖНО: Arg2 должен быть ##Arg2##. Пример: Lt(Arg1, ##Arg2##)",
+			"name": "LT.function.language.tmpl",
+			"match": "Lt"
+		},
+		"FUNCTION_LT2": {
+			"comment": "проверка на 'меньше' (Arg1 < Arg2). может сравнивать переменные из FOR, начинаются на '.'. но выполняется дольше чем Lt",
+			"name": "LT2.function.language.tmpl",
+			"match": "Lt2"
+		},
+		"FUNCTION_UPPER": {
+			"comment": "проверка на равенство между аргументами Arg1 и Arg2",
+			"name": "UPPER.function.language.tmpl",
+			"match": "Upper"
+		},
+		"FUNCTION_SETVARS": {
+			"comment": "проверка на равенство между аргументами Arg1 и Arg2",
+			"name": "SetVars.function.language.tmpl",
+			"match": "SetVars"
+		},
+		"FUNCTION_DEC": {
+			"comment": "уменьшает значение переменной Arg1 на 1 или [на Arg2]",
+			"name": "DEC.function.language.tmpl",
+			"match": "Dec"
+		},
+		"FUNCTION_INC": {
+			"comment": "увеличивает значение переменной Arg1 на 1 или [на Arg2]",
+			"name": "INC.function.language.tmpl",
+			"match": "Inc"
+		},
+		"FUNCTION_USERAGENT": {
+			"comment": "уменьшает значение переменной Arg1 на 1 или [на Arg2]",
+			"name": "USERAGENT.function.language.tmpl",
+			"match": "UserAgent"
+		},
+		"FUNCTION_EQV": {
+			"name": "EQV.function.language.tmpl",
+			"match": "EqV"
+		},
+		"FUNCTION_GT": {
+			"comment": "проверка на 'больше' (Arg1 > Arg2). ВАЖНО: Arg2 должен быть ##Arg2##. Пример: Gt(Arg1, ##Arg2##)",
+			"name": "GT.function.language.tmpl",
+			"match": "Gt"
+		},
+		"FUNCTION_GT2": {
+			"comment": "проверка на 'больше' (Arg1 > Arg2). может сравнивать переменные из FOR, начинаются на '.'. но выполняется дольше чем Gt",
+			"name": "GT2.function.language.tmpl",
+			"match": "Gt2"
+		},
+		"FUNCTION_MOD": {
+			"comment": "возвращает остаток от деления",
+			"name": "MOD.function.language.tmpl",
+			"match": "Mod"
+		},
+		"FUNCTION_NUMEND": {
+			"comment": "Функция нужна для склонения слов в в зависимости от числа. Arg1 число(обычно переменная). Arg2, Arg3, Arg4 - строки в зависимости от числа. (5, 1, 2 - соотвественно)",
+			"name": "NUMEND.function.language.tmpl",
+			"match": "NumEnd"
+		},
+		"FUNCTION_WBR": {
+			"comment": "в (Arg1) вставляет тэг <wbr> через каждые (Arg2) символов",
+			"name": "WBR.function.language.tmpl",
+			"match": "wbr"
+		},
+		"FUNCTION_BR": {
+			"comment": "в (Arg1) заменяет '\r\n' тэгом <br>",
+			"name": "BR.function.language.tmpl",
+			"match": "br"
+		},
+		"FUNCTION_NOBR": {
+			"comment": "в (Arg1) заменяет '\r\n' пробелом",
+			"name": "NOBR.function.language.tmpl",
+			"match": "nobr"
+		},
+		"FUNCTION_REALUSERNAME": {
+			"name": "REALUSERNAME.function.language.tmpl",
+			"match": "RealUserName"
+		},
+		"FUNCTION_RANDOM": {
+			"comment": "возвращает рандом число от 0 до 2147483647 (x32)",
+			"name": "RANDOM.function.language.tmpl",
+			"match": "Random"
+		},
+		"FUNCTION_JSONENCODE": {
+			"comment": "возвращает переменную с заэскейпленными символами для js",
+			"name": "JSONENCODE.function.language.tmpl",
+			"match": "JsonEncode"
+		},
+		"FUNCTION_GETCOOKIE": {
+			"comment": "копирует значение cookie (Arg1) в переменную (Arg2)",
+			"name": "GETCOOKIE.function.language.tmpl",
+			"match": "GetCookie"
+		},
+		"FUNCTION_GETUSERPROPERTY": {
+			"name": "GETUSERPROPERTY.function.language.tmpl",
+			"match": "GetUserProperty"
+		},
+		"FUNCTION_SETUSERPROPERTY": {
+			"name": "SETUSERPROPERTY.function.language.tmpl",
+			"match": "SetUserProperty"
+		},
+		"FUNCTION_DIV": {
+			"comment": "возвращает результат деления Arg1/Arg2, если [Arg3] отсутствует или 0. иначе (Arg1+Arg2)/Arg2",
+			"name": "DIV.function.language.tmpl",
+			"match": "Div"
+		},
+		"FUNCTION_MUL": {
+			"comment": "возвращает результат умножения Arg1*Arg2",
+			"name": "MUL.function.language.tmpl",
+			"match": "Mul"
+		},
+		"FUNCTION_FIRST": {
+			"comment": "возвращает 1, если 1й элемент цикла иначе 0. Arg1 - любая переменная цикла",
+			"name": "FIRST.function.language.tmpl",
+			"match": "First"
+		},
+		"FUNCTION_LAST": {
+			"comment": "возвращает 1, если последний элемент цикла иначе 0. Arg1 - любая переменная цикла",
+			"name": "LAST.function.language.tmpl",
+			"match": "Last"
+		},
+		"FUNCTION_IDX": {
+			"comment": "возвращает номер текущей итерации цикла. Arg1 - любая переменная цикла",
+			"name": "IDX.function.language.tmpl",
+			"match": "Idx"
+		},
+		"FUNCTION_ODD": {
+			"comment": "возвращает 1, если нечетная текущая итерация цикла, иначе 0. Arg1 - любая переменная цикла",
+			"name": "ODD.function.language.tmpl",
+			"match": "Odd"
+		},
+		"FUNCTION_MOD2": {
+			"comment": "Остаток от деления Arg1 на Arg2",
+			"name": "MOD2.function.language.tmpl",
+			"match": "Mod2"
+		},
+		"FUNCTION_BITAND": {
+			"comment": "Битовая операция AND между Arg1 и Arg2, где Arg1 - переменная, а Arg2 может быть передан значением",
+			"name": "BITAND.function.language.tmpl",
+			"match": "BitAnd"
+		},
+		"FUNCTION_BITOR": {
+			"comment": "Битовая операция OR между Arg1 и Arg2, где Arg1 - переменная, а Arg2 может быть передан значением",
+			"name": "BITOR.function.language.tmpl",
+			"match": "BitOr"
+		},
+		"FUNCTION_BITXOR": {
+			"comment": "Битовая операция XOR между Arg1 и Arg2, где Arg1 - переменная, а Arg2 может быть передан значением",
+			"name": "BITXOR.function.language.tmpl",
+			"match": "BitXor"
+		},
+		"FUNCTION_BITNOT": {
+			"comment": "Битовая операция NOT на Arg1, Arg1 - переменная",
+			"name": "BITNOT.function.language.tmpl",
+			"match": "BitNot"
+		},
+		"FUNCTION_CRC32": {
+			"comment": "crc32() от сожержимого переменной ##Arg1##",
+			"name": "CRC32.function.language.tmpl",
+			"match": "CRC32"
+		},
+		"FUNCTION_MRCU": {
+			"comment": "MRCU",
+			"name": "MRCU.function.language.tmpl",
+			"match": "MRCU"
+		},
+		"FUNCTION_RANDOMEX": {
+			"comment": "Записывает в Arg1 рандомное число в пределах Arg2",
+			"name": "RANDOMEX.function.language.tmpl",
+			"match": "RandomEx"
+		},
+		"FUNCTION_REKLAMA_COOKIES": {
+			"comment": "Возвращает значение поля Arg1 из куки s",
+			"name": "REKLAMA_COOKIES.function.language.tmpl",
+			"match": "Relkama/CookieS"
+		}
+	},
+	"patterns": [	
+		{
+			"comment": "double-dash wrapped expression",
+			"name": "expression.tmpl",
+			"begin": "##",
+			"beginCaptures": { "0": { "name": "EXPRESSIONSTART.language.tmpl"} },
+			"patterns": [
+				{
+					"comment": "SetVars instruction begins with SetVars(someVar, ",
+					"name": "setvars.expression.tmpl",
+					"begin": "SetVars\\(",
+					"patterns": [
+						{ "include": "#ASSIGNMENTEXPRESSION" }
+					],
+					"end": "\\)"
+				}
+			],
+			"end": "##",
+			"endCaptures": { "0": { "name": "EXPRESSIONEND.language.tmpl"} }
+		}
+	],
+
+	"uuid": "5042ecef-4e4f-4c8e-8f7a-c1bee0e06da8"
+}
