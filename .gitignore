@@ -4,3 +4,4 @@
 *.last-run
 *.sublime-settings
 *.sublime-keymap
+*.sublime-build
