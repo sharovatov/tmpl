@@ -1,5 +1,3 @@
-### Sublime Text 2 settings
+### mpop-tmpl support for textmate/sublime 
 
-This directory contains my hotkeys, snippets, build tasks and other settings for Sublime Text 2 editor.
-
-It's used primarily for synchronisation between workstations. `User` directory is `ln`'ed to `/Users/sharovatov/Library/Application Support/Sublime Text 2/Packages`
+This directory contains Sublime Text 2 and TextMate snippets, language definition and colour scheme for mpop-tmpl language.
