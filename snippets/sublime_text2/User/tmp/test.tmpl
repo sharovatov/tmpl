@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test page - ##TitleVar##</title>
+</head>
+<!-- sdf -->
+<body>
+	<!-- INCLUDE blocks/file.html -->
+		##SetVars(wtf=234)##
+		<?php serialize($a); ?>
+		<script type="text/javascript">
+		window.setTimeout(function(){
+		
+		})
+		</script>
+		##SetVars(fromothervar=##OtherVar##)##
+	<!-- IF Eq2(.LoopVar,15) --> 
+		##FiledURL(.ItemUrl)## 
+	<!-- ELSEIF Gt2(.LoopVar,##SomeOtherComparingVar##) -->
+		echo some other crap
+	<!-- ELSE --->
+		wtf?
+	<!-- /IF Eq2(.LoopVar,15) -->
+</body>
+</html>
