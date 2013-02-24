@@ -7,6 +7,11 @@
 			"name": "DDASH.language.tmpl",
 			"match": "##"
 		},
+		"COMMA": {
+			"comment": "general separator",
+			"name": "COMMA.punctuation.language.tmpl",
+			"match": ","
+		},
 		"LABEL": {
 			"comment": "any variable or function name must conform to this syntax",
 			"name":	"LABEL.language.tmpl",
@@ -133,6 +138,14 @@
 			"patterns": [
 				{
 					"comment": "Arg1 is mandatory",
+					"include": "#LABEL"
+				},
+				{
+					"comment": "second argument can be present after a comma",
+					"include": "#COMMA"
+				},
+				{
+					"comment": "possible Arg2 - number or LABEL. TODO: support QuotedExpression",
 					"include": "#LABEL"
 				}
 			],

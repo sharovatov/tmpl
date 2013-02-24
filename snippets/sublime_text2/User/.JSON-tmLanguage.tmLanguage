@@ -96,6 +96,15 @@
 			<key>name</key>
 			<string>ASSIGNMENTOPERATOR.language.tmpl</string>
 		</dict>
+		<key>COMMA</key>
+		<dict>
+			<key>comment</key>
+			<string>general separator</string>
+			<key>match</key>
+			<string>,</string>
+			<key>name</key>
+			<string>COMMA.punctuation.language.tmpl</string>
+		</dict>
 		<key>DDASH</key>
 		<dict>
 			<key>comment</key>
@@ -464,6 +473,18 @@
 				<dict>
 					<key>comment</key>
 					<string>Arg1 is mandatory</string>
+					<key>include</key>
+					<string>#LABEL</string>
+				</dict>
+				<dict>
+					<key>comment</key>
+					<string>second argument can be present after a comma</string>
+					<key>include</key>
+					<string>#COMMA</string>
+				</dict>
+				<dict>
+					<key>comment</key>
+					<string>possible Arg2 - number or LABEL. TODO: support QuotedExpression</string>
 					<key>include</key>
 					<string>#LABEL</string>
 				</dict>
