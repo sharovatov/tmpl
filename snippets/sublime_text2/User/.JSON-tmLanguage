@@ -38,6 +38,58 @@
 				{ "comment": "todo: include #EXPRESSION as soon as it's ready"}
 			]
 		},
+		"FUNCTIONEXPRESSION": {
+			"comment": "any function expression must have a valid function name and parenthesis with expression inside",
+			"name": "FUNCTIONEXPRESSION.language.tmpl",
+			"patterns": [
+			{ "include": "#FUNCTION_EQ" },
+			{ "include": "#FUNCTION_EQ" },
+			{ "include": "#FUNCTION_EQ" },
+			{ "include": "#FUNCTION_EQ" },
+			{ "include": "#FUNCTION_EQ" },
+			{ "include": "#FUNCTION_EQ" },
+			{ "include": "#FUNCTION_EQ" },
+			{ "include": "#FUNCTION_EQ" },
+			{ "include": "#FUNCTION_EQ" },
+			{ "include": "#FUNCTION_EQ2" },
+			{ "include": "#FUNCTION_LT" },
+			{ "include": "#FUNCTION_LT2" },
+			{ "include": "#FUNCTION_UPPER" },
+			{ "include": "#FUNCTION_SETVARS" },
+			{ "include": "#FUNCTION_DEC" },
+			{ "include": "#FUNCTION_INC" },
+			{ "include": "#FUNCTION_USERAGENT" },
+			{ "include": "#FUNCTION_EQV" },
+			{ "include": "#FUNCTION_GT" },
+			{ "include": "#FUNCTION_GT2" },
+			{ "include": "#FUNCTION_MOD" },
+			{ "include": "#FUNCTION_NUMEND" },
+			{ "include": "#FUNCTION_WBR" },
+			{ "include": "#FUNCTION_BR" },
+			{ "include": "#FUNCTION_NOBR" },
+			{ "include": "#FUNCTION_REALUSERNAME" },
+			{ "include": "#FUNCTION_RANDOM" },
+			{ "include": "#FUNCTION_JSONENCODE" },
+			{ "include": "#FUNCTION_GETCOOKIE" },
+			{ "include": "#FUNCTION_GETUSERPROPERTY" },
+			{ "include": "#FUNCTION_SETUSERPROPERTY" },
+			{ "include": "#FUNCTION_DIV" },
+			{ "include": "#FUNCTION_MUL" },
+			{ "include": "#FUNCTION_FIRST" },
+			{ "include": "#FUNCTION_LAST" },
+			{ "include": "#FUNCTION_IDX" },
+			{ "include": "#FUNCTION_ODD" },
+			{ "include": "#FUNCTION_MOD2" },
+			{ "include": "#FUNCTION_BITAND" },
+			{ "include": "#FUNCTION_BITOR" },
+			{ "include": "#FUNCTION_BITXOR" },
+			{ "include": "#FUNCTION_BITNOT" },
+			{ "include": "#FUNCTION_CRC32" },
+			{ "include": "#FUNCTION_MRCU" },
+			{ "include": "#FUNCTION_RANDOMEX" },
+			{ "include": "#FUNCTION_REKLAMA_COOKIES" }
+			]
+		},
 
 		"FUNCTION_EQ": {
 			"comment": "проверка на равенство между аргументами Arg1 и Arg2",
@@ -77,7 +129,14 @@
 		"FUNCTION_INC": {
 			"comment": "увеличивает значение переменной Arg1 на 1 или [на Arg2]",
 			"name": "INC.function.language.tmpl",
-			"match": "Inc"
+			"begin": "Inc\\(",
+			"patterns": [
+				{
+					"comment": "Arg1 is mandatory",
+					"include": "#LABEL"
+				}
+			],
+			"end": "\\)"
 		},
 		"FUNCTION_USERAGENT": {
 			"comment": "уменьшает значение переменной Arg1 на 1 или [на Arg2]",
@@ -226,13 +285,18 @@
 			"match": "Relkama/CookieS"
 		}
 	},
-	"patterns": [	
+
+	"patterns": [
 		{
 			"comment": "double-dash wrapped expression",
 			"name": "expression.tmpl",
 			"begin": "##",
 			"beginCaptures": { "0": { "name": "EXPRESSIONSTART.language.tmpl"} },
 			"patterns": [
+				{
+					"comment": "function expression can be found within the DDASH boundaries",
+					"include": "#FUNCTIONEXPRESSION"
+				},
 				{
 					"comment": "SetVars instruction begins with SetVars(someVar, ",
 					"name": "setvars.expression.tmpl",

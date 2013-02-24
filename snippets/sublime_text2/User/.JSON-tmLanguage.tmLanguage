@@ -38,6 +38,12 @@
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>comment</key>
+					<string>function expression can be found within the DDASH boundaries</string>
+					<key>include</key>
+					<string>#FUNCTIONEXPRESSION</string>
+				</dict>
+				<dict>
 					<key>begin</key>
 					<string>SetVars\(</string>
 					<key>comment</key>
@@ -98,6 +104,200 @@
 			<string>##</string>
 			<key>name</key>
 			<string>DDASH.language.tmpl</string>
+		</dict>
+		<key>FUNCTIONEXPRESSION</key>
+		<dict>
+			<key>comment</key>
+			<string>any function expression must have a valid function name and parenthesis with expression inside</string>
+			<key>name</key>
+			<string>FUNCTIONEXPRESSION.language.tmpl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQ2</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_LT</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_LT2</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_UPPER</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_SETVARS</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_DEC</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_INC</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_USERAGENT</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_EQV</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_GT</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_GT2</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_MOD</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_NUMEND</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_WBR</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_BR</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_NOBR</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_REALUSERNAME</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_RANDOM</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_JSONENCODE</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_GETCOOKIE</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_GETUSERPROPERTY</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_SETUSERPROPERTY</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_DIV</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_MUL</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_FIRST</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_LAST</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_IDX</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_ODD</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_MOD2</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_BITAND</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_BITOR</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_BITXOR</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_BITNOT</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_CRC32</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_MRCU</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_RANDOMEX</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTION_REKLAMA_COOKIES</string>
+				</dict>
+			</array>
 		</dict>
 		<key>FUNCTION_BITAND</key>
 		<dict>
@@ -251,12 +451,23 @@
 		</dict>
 		<key>FUNCTION_INC</key>
 		<dict>
+			<key>begin</key>
+			<string>Inc\(</string>
 			<key>comment</key>
 			<string>увеличивает значение переменной Arg1 на 1 или [на Arg2]</string>
-			<key>match</key>
-			<string>Inc</string>
+			<key>end</key>
+			<string>\)</string>
 			<key>name</key>
 			<string>INC.function.language.tmpl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>comment</key>
+					<string>Arg1 is mandatory</string>
+					<key>include</key>
+					<string>#LABEL</string>
+				</dict>
+			</array>
 		</dict>
 		<key>FUNCTION_JSONENCODE</key>
 		<dict>
