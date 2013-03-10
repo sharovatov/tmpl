@@ -322,7 +322,8 @@
 			],
 			"end": "##",
 			"endCaptures": { "0": { "name": "EXPRESSIONEND.language.tmpl"} }
-		}
+		},
+		{ "include": "text.html.basic" }
 	],
 
 	"uuid": "5042ecef-4e4f-4c8e-8f7a-c1bee0e06da8"
