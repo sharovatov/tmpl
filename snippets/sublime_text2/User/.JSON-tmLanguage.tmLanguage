@@ -11,56 +11,10 @@
 	<key>patterns</key>
 	<array>
 		<dict>
-			<key>begin</key>
-			<string>##</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>EXPRESSIONSTART.language.tmpl</string>
-				</dict>
-			</dict>
 			<key>comment</key>
-			<string>double-dash wrapped expression</string>
-			<key>end</key>
-			<string>##</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>EXPRESSIONEND.language.tmpl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>expression.tmpl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>comment</key>
-					<string>function expression can be found within the DDASH boundaries</string>
-					<key>include</key>
-					<string>#FUNCTIONEXPRESSION</string>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>SetVars\(</string>
-					<key>comment</key>
-					<string>SetVars instruction begins with SetVars(someVar, </string>
-					<key>end</key>
-					<string>\)</string>
-					<key>name</key>
-					<string>setvars.expression.tmpl</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#ASSIGNMENTEXPRESSION</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
+			<string>simple output expressions are used to output variable values or function call results into HTML</string>
+			<key>include</key>
+			<string>#OUTPUTEXPRESSION</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -87,7 +41,7 @@
 				</dict>
 				<dict>
 					<key>comment</key>
-					<string>todo: include #EXPRESSION as soon as it's ready</string>
+					<string>todo: include #EXPRESSION as soon as it's ready + make sure the second argument is a valid outputexpression or just plain text / number</string>
 				</dict>
 			</array>
 		</dict>
@@ -107,16 +61,7 @@
 			<key>match</key>
 			<string>,</string>
 			<key>name</key>
-			<string>COMMA.punctuation.language.tmpl</string>
-		</dict>
-		<key>DDASH</key>
-		<dict>
-			<key>comment</key>
-			<string>any variable wrapped in double dashes returns its value</string>
-			<key>match</key>
-			<string>##</string>
-			<key>name</key>
-			<string>DDASH.language.tmpl</string>
+			<string>COMMA.punctuation.tmpl</string>
 		</dict>
 		<key>FUNCTIONEXPRESSION</key>
 		<dict>
@@ -488,9 +433,9 @@
 				</dict>
 				<dict>
 					<key>comment</key>
-					<string>possible Arg2 - number or LABEL. TODO: support QuotedExpression</string>
+					<string>possible Arg2 - number or OUTPUTEXPRESSION. TODO: make this second arg optional</string>
 					<key>include</key>
-					<string>#LABEL</string>
+					<string>#OUTPUTEXPRESSION</string>
 				</dict>
 			</array>
 		</dict>
@@ -671,6 +616,15 @@
 			<key>name</key>
 			<string>WBR.function.language.tmpl</string>
 		</dict>
+		<key>ITERATORPREFIX</key>
+		<dict>
+			<key>comment</key>
+			<string>a variable might have an iterator prefix meaning that it's taken from the loop</string>
+			<key>match</key>
+			<string>\.{1}</string>
+			<key>name</key>
+			<string>ITERATORPREFIX.language.tmpl</string>
+		</dict>
 		<key>LABEL</key>
 		<dict>
 			<key>comment</key>
@@ -680,21 +634,55 @@
 			<key>name</key>
 			<string>LABEL.language.tmpl</string>
 		</dict>
-		<key>VARIABLE</key>
+		<key>LOOPVARIABLE</key>
 		<dict>
 			<key>comment</key>
-			<string>variable can be just a label or a label preceded with a dot</string>
+			<string>loop var is just a label preceded with a dot</string>
 			<key>name</key>
 			<string>VARIABLE.language.tmpl</string>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>comment</key>
-					<string>a variable might have an iterator prefix meaning that it's taken from the loop</string>
-					<key>match</key>
-					<string>\.{0,1}</string>
+					<key>include</key>
+					<string>#ITERATORPREFIX</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#LABEL</string>
+				</dict>
+			</array>
+		</dict>
+		<key>OUTPUTEXPRESSION</key>
+		<dict>
+			<key>begin</key>
+			<string>##</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
 					<key>name</key>
-					<string>ITERATORPREFIX.language.tmpl</string>
+					<string>OUTPUTEXPRESSIONSTART.punctuation.tmpl</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>an expression must be wrapped in ## to return its value to output</string>
+			<key>end</key>
+			<string>##</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>OUTPUTEXPRESSIONEND.punctuation.tmpl</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>OUTPUTEXPRESSION.language.tmpl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#FUNCTIONEXPRESSION</string>
 				</dict>
 				<dict>
 					<key>include</key>

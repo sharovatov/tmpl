@@ -2,14 +2,9 @@
 	"scopeName": "source.tmpl",
 	"fileTypes": ["tmpl"],
 	"repository": {
-		"DDASH": {
-			"comment": "any variable wrapped in double dashes returns its value",
-			"name": "DDASH.language.tmpl",
-			"match": "##"
-		},
 		"COMMA": {
 			"comment": "general separator",
-			"name": "COMMA.punctuation.language.tmpl",
+			"name": "COMMA.punctuation.tmpl",
 			"match": ","
 		},
 		"LABEL": {
@@ -17,17 +12,30 @@
 			"name":	"LABEL.language.tmpl",
 			"match": "[a-zA-Z_][a-zA-Z_0-9]*"
 		},
-		"VARIABLE": {
-			"comment": "variable can be just a label or a label preceded with a dot",
+		"ITERATORPREFIX": {
+			"comment": "a variable might have an iterator prefix meaning that it's taken from the loop",
+			"name": "ITERATORPREFIX.language.tmpl",
+			"match": "\\.{1}"
+		},
+		"LOOPVARIABLE": {
+			"comment": "loop var is just a label preceded with a dot",
 			"name": "VARIABLE.language.tmpl",
 			"patterns": [
-				{
-					"comment": "a variable might have an iterator prefix meaning that it's taken from the loop",
-					"name": "ITERATORPREFIX.language.tmpl",
-					"match": "\\.{0,1}"
-				},
+				{ "include": "#ITERATORPREFIX" },
 				{ "include": "#LABEL" }
 			]
+		},
+		"OUTPUTEXPRESSION": {
+			"comment": "an expression must be wrapped in ## to return its value to output",
+			"name": "OUTPUTEXPRESSION.language.tmpl",
+			"begin": "##",
+			"beginCaptures": { "0": { "name": "OUTPUTEXPRESSIONSTART.punctuation.tmpl"} },
+			"patterns": [
+				{ "include": "#FUNCTIONEXPRESSION" },
+				{ "include": "#LABEL" }
+			],
+			"end": "##",
+			"endCaptures": { "0": { "name": "OUTPUTEXPRESSIONEND.punctuation.tmpl"} }
 		},
 		"ASSIGNMENTOPERATOR": {
 			"comment": "there are two types of assignment operators in mpoptmpl - , and =",
@@ -40,9 +48,10 @@
 			"patterns": [
 				{ "include": "#VARIABLE" },
 				{ "include": "#ASSIGNMENTOPERATOR" },
-				{ "comment": "todo: include #EXPRESSION as soon as it's ready"}
+				{ "comment": "todo: include #EXPRESSION as soon as it's ready + make sure the second argument is a valid outputexpression or just plain text / number"}
 			]
 		},
+
 		"FUNCTIONEXPRESSION": {
 			"comment": "any function expression must have a valid function name and parenthesis with expression inside",
 			"name": "FUNCTIONEXPRESSION.language.tmpl",
@@ -141,12 +150,19 @@
 					"include": "#LABEL"
 				},
 				{
+					"comment": "optional argument can be a normal text, an output expression or a block"
+					"name": "OPTIONALARG.language.tmpl",
+					"begin": ",\(",
+							
+					"end": "\)",
+				},
+				{
 					"comment": "second argument can be present after a comma",
 					"include": "#COMMA"
 				},
 				{
-					"comment": "possible Arg2 - number or LABEL. TODO: support QuotedExpression",
-					"include": "#LABEL"
+					"comment": "possible Arg2 - number or OUTPUTEXPRESSION. TODO: make this second arg optional",
+					"include": "#OUTPUTEXPRESSION"
 				}
 			],
 			"end": "\\)"
@@ -301,27 +317,8 @@
 
 	"patterns": [
 		{
-			"comment": "double-dash wrapped expression",
-			"name": "expression.tmpl",
-			"begin": "##",
-			"beginCaptures": { "0": { "name": "EXPRESSIONSTART.language.tmpl"} },
-			"patterns": [
-				{
-					"comment": "function expression can be found within the DDASH boundaries",
-					"include": "#FUNCTIONEXPRESSION"
-				},
-				{
-					"comment": "SetVars instruction begins with SetVars(someVar, ",
-					"name": "setvars.expression.tmpl",
-					"begin": "SetVars\\(",
-					"patterns": [
-						{ "include": "#ASSIGNMENTEXPRESSION" }
-					],
-					"end": "\\)"
-				}
-			],
-			"end": "##",
-			"endCaptures": { "0": { "name": "EXPRESSIONEND.language.tmpl"} }
+			"comment": "simple output expressions are used to output variable values or function call results into HTML",
+			"include": "#OUTPUTEXPRESSION"
 		},
 		{ "include": "text.html.basic" }
 	],
